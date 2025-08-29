@@ -1,11 +1,11 @@
 package com.example.coreCRM.controller;
 
-import com.example.coreCRM.entity.TaskEntity;
+import com.example.coreCRM.dto.request.CreateTaskRequest;
+import com.example.coreCRM.dto.response.TaskResponse;
 import com.example.coreCRM.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,25 +17,24 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping
-    public List<TaskEntity> getAllTasks() {
-        return taskService.getAllTasks();
+    @PostMapping
+    public TaskResponse createTask(@RequestBody @Valid CreateTaskRequest request) {
+        return taskService.createTask(request);
     }
 
     @GetMapping("/{id}")
-    public TaskEntity getTaskById(@PathVariable UUID id) {
-        return taskService.getTaskById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found"));
+    public TaskResponse getTaskById(@PathVariable UUID id) {
+        return taskService.getTaskById(id);
     }
 
-    @PostMapping
-    public TaskEntity createTask(@RequestBody TaskEntity task) {
-        return taskService.createTask(task);
+    @GetMapping
+    public List<TaskResponse> getAllTasks() {
+        return taskService.getAllTasks();
     }
 
     @PutMapping("/{id}")
-    public TaskEntity updateTask(@PathVariable UUID id, @RequestBody TaskEntity task) {
-        return taskService.updateTask(id, task);
+    public TaskResponse updateTask(@PathVariable UUID id, @RequestBody @Valid CreateTaskRequest request) {
+        return taskService.updateTask(id, request);
     }
 
     @DeleteMapping("/{id}")

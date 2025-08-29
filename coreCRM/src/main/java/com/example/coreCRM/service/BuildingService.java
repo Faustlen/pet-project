@@ -1,15 +1,15 @@
 package com.example.coreCRM.service;
 
-import com.example.coreCRM.entity.BuildingEntity;
+import com.example.coreCRM.dto.request.CreateBuildingRequest;
+import com.example.coreCRM.dto.response.BuildingResponse;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface BuildingService {
-    List<BuildingEntity> getAllBuildings();
-    Optional<BuildingEntity> getBuildingById(UUID id);
-    BuildingEntity createBuilding(BuildingEntity building);
-    BuildingEntity updateBuilding(UUID id, BuildingEntity building);
+    BuildingResponse createBuilding(CreateBuildingRequest request);
+    BuildingResponse getBuildingById(UUID id);
+    List<BuildingResponse> getAllBuildings();
+    BuildingResponse updateBuilding(UUID id, CreateBuildingRequest request);
     void deleteBuilding(UUID id);
 }

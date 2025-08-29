@@ -1,45 +1,56 @@
 package com.example.coreCRM.service.impl;
 
+import com.example.coreCRM.constants.ValidationConstants;
+import com.example.coreCRM.dto.request.CreateBuildingRequest;
+import com.example.coreCRM.dto.response.BuildingResponse;
 import com.example.coreCRM.entity.BuildingEntity;
+import com.example.coreCRM.mapper.BuildingMapper;
 import com.example.coreCRM.repository.BuildingRepository;
 import com.example.coreCRM.service.BuildingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 
 @Service
 @RequiredArgsConstructor
 public class BuildingServiceImpl implements BuildingService {
 
     private final BuildingRepository buildingRepository;
+    private final BuildingMapper buildingMapper;
 
     @Override
-    public List<BuildingEntity> getAllBuildings() {
-        return buildingRepository.findAll();
+    public BuildingResponse createBuilding(CreateBuildingRequest request) {
+        BuildingEntity entity = buildingMapper.toEntity(request);
+        entity.setId(UUID.randomUUID());
+        return buildingMapper.toResponse(buildingRepository.save(entity));
     }
 
     @Override
-    public Optional<BuildingEntity> getBuildingById(UUID id) {
-        return buildingRepository.findById(id);
+    public BuildingResponse getBuildingById(UUID id) {
+        BuildingEntity entity = buildingRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ValidationConstants.BUILDING_NOT_FOUND));
+        return buildingMapper.toResponse(entity);
     }
 
     @Override
-    public BuildingEntity createBuilding(BuildingEntity building) {
-        building.setId(UUID.randomUUID());
-        return buildingRepository.save(building);
+    public List<BuildingResponse> getAllBuildings() {
+        return buildingRepository.findAll().stream()
+                .map(buildingMapper::toResponse)
+                .toList();
     }
 
     @Override
-    public BuildingEntity updateBuilding(UUID id, BuildingEntity building) {
-        return buildingRepository.findById(id)
-                .map(existing -> {
-                    existing.setAddress(building.getAddress());
-                    return buildingRepository.save(existing);
-                })
-                .orElseThrow(() -> new RuntimeException("Building not found"));
+    public BuildingResponse updateBuilding(UUID id, CreateBuildingRequest request) {
+        BuildingEntity entity = buildingRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, ValidationConstants.BUILDING_NOT_FOUND));
+        buildingMapper.toEntity(request, entity);
+        return buildingMapper.toResponse(buildingRepository.save(entity));
     }
 
     @Override

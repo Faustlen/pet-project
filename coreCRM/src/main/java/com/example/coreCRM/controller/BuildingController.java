@@ -1,11 +1,11 @@
 package com.example.coreCRM.controller;
 
-import com.example.coreCRM.entity.BuildingEntity;
+import com.example.coreCRM.dto.request.CreateBuildingRequest;
+import com.example.coreCRM.dto.response.BuildingResponse;
 import com.example.coreCRM.service.BuildingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,25 +17,24 @@ public class BuildingController {
 
     private final BuildingService buildingService;
 
-    @GetMapping
-    public List<BuildingEntity> getAllBuildings() {
-        return buildingService.getAllBuildings();
+    @PostMapping
+    public BuildingResponse createBuilding(@RequestBody @Valid CreateBuildingRequest request) {
+        return buildingService.createBuilding(request);
     }
 
     @GetMapping("/{id}")
-    public BuildingEntity getBuildingById(@PathVariable UUID id) {
-        return buildingService.getBuildingById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Building not found"));
+    public BuildingResponse getBuildingById(@PathVariable UUID id) {
+        return buildingService.getBuildingById(id);
     }
 
-    @PostMapping
-    public BuildingEntity createBuilding(@RequestBody BuildingEntity building) {
-        return buildingService.createBuilding(building);
+    @GetMapping
+    public List<BuildingResponse> getAllBuildings() {
+        return buildingService.getAllBuildings();
     }
 
     @PutMapping("/{id}")
-    public BuildingEntity updateBuilding(@PathVariable UUID id, @RequestBody BuildingEntity building) {
-        return buildingService.updateBuilding(id, building);
+    public BuildingResponse updateBuilding(@PathVariable UUID id, @RequestBody @Valid CreateBuildingRequest request) {
+        return buildingService.updateBuilding(id, request);
     }
 
     @DeleteMapping("/{id}")

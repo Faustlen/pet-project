@@ -1,16 +1,15 @@
 package com.example.coreCRM.service;
 
-import com.example.coreCRM.entity.TaskEntity;
+import com.example.coreCRM.dto.request.CreateTaskRequest;
+import com.example.coreCRM.dto.response.TaskResponse;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface TaskService {
-    List<TaskEntity> getAllTasks();
-    Optional<TaskEntity> getTaskById(UUID id);
-    TaskEntity createTask(TaskEntity task);
-    TaskEntity updateTask(UUID id, TaskEntity task);
+    TaskResponse createTask(CreateTaskRequest request);
+    TaskResponse getTaskById(UUID id);
+    List<TaskResponse> getAllTasks();
+    TaskResponse updateTask(UUID id, CreateTaskRequest request);
     void deleteTask(UUID id);
-    TaskEntity assignTaskToUser(UUID taskId, UUID userId);
 }

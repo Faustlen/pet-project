@@ -5,7 +5,7 @@ CREATE TABLE users (
 
 CREATE TABLE buildings (
     id UUID PRIMARY KEY,
-    address VARCHAR(500) NOT NULL
+    address VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tasks (

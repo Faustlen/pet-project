@@ -1,11 +1,11 @@
 package com.example.coreCRM.controller;
 
-import com.example.coreCRM.entity.UserEntity;
+import com.example.coreCRM.dto.request.CreateUserRequest;
+import com.example.coreCRM.dto.response.UserResponse;
 import com.example.coreCRM.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,25 +17,24 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.getAllUsers();
+    @PostMapping
+    public UserResponse createUser(@RequestBody @Valid CreateUserRequest request) {
+        return userService.createUser(request);
     }
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    public UserResponse getUserById(@PathVariable UUID id) {
+        return userService.getUserById(id);
     }
 
-    @PostMapping
-    public UserEntity createUser(@RequestBody UserEntity user) {
-        return userService.createUser(user);
+    @GetMapping
+    public List<UserResponse> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable UUID id, @RequestBody UserEntity user) {
-        return userService.updateUser(id, user);
+    public UserResponse updateUser(@PathVariable UUID id, @RequestBody @Valid CreateUserRequest request) {
+        return userService.updateUser(id, request);
     }
 
     @DeleteMapping("/{id}")
