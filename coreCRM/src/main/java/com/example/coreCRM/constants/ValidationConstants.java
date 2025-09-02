@@ -15,4 +15,5 @@ public interface ValidationConstants {
     String TASK_TITLE_REQUIRED = "Task title is required";
     String TASK_TITLE_SIZE_NOT_VALID = "Task title max size should be 255";
     String TASK_NOT_FOUND = "Task not found";
+    String TASK_MODIFIED = "Task was modified by another user";
 }

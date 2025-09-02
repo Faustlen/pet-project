@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,5 +57,11 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public void deleteBuilding(UUID id) {
         buildingRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BuildingEntity> findBuildingsWithoutRecentContact(int days) {
+        LocalDate date = LocalDate.now().minusDays(days);
+        return buildingRepository.findWithoutRecentContact(date);
     }
 }

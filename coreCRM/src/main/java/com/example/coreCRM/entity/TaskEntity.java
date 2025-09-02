@@ -22,4 +22,7 @@ public class TaskEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private BuildingEntity building_id;
+
+    @Version
+    private Long version;
 }

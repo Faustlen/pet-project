@@ -12,6 +12,7 @@ import org.mapstruct.MappingTarget;
 public interface BuildingMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "lastContactDate", ignore = true)
     BuildingEntity toEntity(CreateBuildingRequest dto);
 
     @Mapping(target = "id", ignore = true)

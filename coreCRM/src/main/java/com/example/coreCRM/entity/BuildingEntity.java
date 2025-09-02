@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -16,4 +17,6 @@ public class BuildingEntity {
     private UUID id;
 
     private String address;
+
+    private LocalDate lastContactDate;
 }

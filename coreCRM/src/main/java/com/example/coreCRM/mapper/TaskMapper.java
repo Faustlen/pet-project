@@ -13,11 +13,13 @@ public interface TaskMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user_id", ignore = true)
     @Mapping(target = "building_id", ignore = true)
+    @Mapping(target = "version", ignore = true)
     TaskEntity toEntity(CreateTaskRequest request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user_id", ignore = true)
     @Mapping(target = "building_id", ignore = true)
+    @Mapping(target = "version", ignore = true)
     TaskEntity toEntity(CreateTaskRequest request, @MappingTarget TaskEntity task);
 
     @Mapping(source = "user_id.id", target = "userId")
