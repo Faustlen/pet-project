@@ -1,6 +1,6 @@
-package com.example.contentLoaderAdapter.service;
+package com.example.service;
 
-import com.example.contentLoaderAdapter.dto.BuildingDto;
+import com.example.dto.BuildingDto;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.example.contentLoaderAdapter.service;
+package com.example.service;
 
-import com.example.contentLoaderAdapter.dto.BuildingDto;
+import com.example.dto.BuildingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

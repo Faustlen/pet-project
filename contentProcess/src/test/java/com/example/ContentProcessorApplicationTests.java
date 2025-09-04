@@ -1,10 +1,10 @@
-package com.example.contentLoaderAdapter;
+package com.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ContentLoaderAdapterApplicationTests {
+class ContentProcessorApplicationTests {
 
 	@Test
 	void contextLoads() {

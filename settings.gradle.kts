@@ -1,2 +1,9 @@
 rootProject.name = "project"
 include("ContentLoaderAdapter")
+include("ContentProcessor")
+include("contentProcessor")
+include("contentProcessor")
+include("contentProcessor")
+include("ContentProcessor")
+include("contentProcess")
+include("common-dto")

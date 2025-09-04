@@ -10,6 +10,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ContentLoaderAdapter" />
+            <option value="$PROJECT_DIR$/ContentProcessor" />
+            <option value="$PROJECT_DIR$/common-dto" />
+            <option value="$PROJECT_DIR$/contentProcess" />
+            <option value="$PROJECT_DIR$/contentProcessor" />
           </set>
         </option>
       </GradleProjectSettings>

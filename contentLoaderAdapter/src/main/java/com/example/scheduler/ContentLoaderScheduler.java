@@ -1,8 +1,8 @@
-package com.example.contentLoaderAdapter.scheduler;
+package com.example.scheduler;
 
-import com.example.contentLoaderAdapter.dto.BuildingDto;
-import com.example.contentLoaderAdapter.service.KafkaProducerService;
-import com.example.contentLoaderAdapter.service.XlsxService;
+import com.example.dto.BuildingDto;
+import com.example.service.KafkaProducerService;
+import com.example.service.XlsxService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
