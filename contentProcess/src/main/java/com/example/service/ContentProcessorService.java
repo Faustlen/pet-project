@@ -18,20 +18,14 @@ public class ContentProcessorService {
 
     @Transactional
     public void processBatch(List<BuildingDto> updates) {
-        List<Estate> estates = new ArrayList<>();
         for (BuildingDto dto : updates) {
-            Estate estate = estateRepository
-                    .findByCadastreAndSource(dto.getCadastre(), dto.getSource())
-                    .orElseGet(Estate::new);
-
-            estate.setCadastre(dto.getCadastre());
-            estate.setType(dto.getType());
-            estate.setSquare(dto.getSquare());
-            estate.setPrice(dto.getPrice());
-            estate.setSource(dto.getSource());
-
-            estates.add(estate);
+            estateRepository.upsertEstate(
+                    dto.getCadastre(),
+                    dto.getSource(),
+                    dto.getType(),
+                    dto.getSquare(),
+                    dto.getPrice()
+            );
         }
-        estateRepository.saveAll(estates);
     }
 }

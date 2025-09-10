@@ -18,20 +18,36 @@ public class ContentLoaderScheduler {
     private final XlsxService xlsxService;
     private final KafkaProducerService producer;
 
-    private int currentRowIndex = 0;
+    private int cianIndex = 0;
+    private int rosreestrIndex = 0;
+    private int domclickIndex = 0;
     private static final int BATCH_SIZE = 10;
 
     @Scheduled(fixedDelay = 10000)
-    public void sendBatch() throws IOException {
-        File file = new File("contentLoaderAdapter/data/cian/offers.xlsx");
+    public void sendCianBatch() throws IOException {
+        processFile("contentLoaderAdapter/data/cian/offers.xlsx", "Cian", cianIndex);
+        cianIndex += BATCH_SIZE;
+    }
 
-        List<BuildingDto> batch = xlsxService.processFile(file, "Cian", currentRowIndex, BATCH_SIZE);
+    @Scheduled(fixedDelay = 10000)
+    public void sendRosreestrBatch() throws IOException {
+        processFile("contentLoaderAdapter/data/rosreestr/offers.xlsx", "Rosreestr", rosreestrIndex);
+        rosreestrIndex += BATCH_SIZE;
+    }
 
-        if (batch.isEmpty()) {
-            return;
+    @Scheduled(fixedDelay = 10000)
+    public void sendDomklikBatch() throws IOException {
+        processFile("contentLoaderAdapter/data/domclick/offers.xlsx", "Domklik", domclickIndex);
+        domclickIndex += BATCH_SIZE;
+    }
+
+    private void processFile(String path, String source, int index) throws IOException {
+
+        File file = new File(path);
+        List<BuildingDto> batch = xlsxService.processFile(file, source, index, BATCH_SIZE);
+
+        if (!batch.isEmpty()) {
+            producer.publish(batch);
         }
-
-        producer.publish(batch);
-        currentRowIndex += batch.size();
     }
 }

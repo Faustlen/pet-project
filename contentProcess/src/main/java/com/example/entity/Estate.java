@@ -4,7 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "estate")
+@Table(
+        name = "estate",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"cadastre", "source"})
+        }
+)
 @Data
 public class Estate {
 
@@ -18,7 +23,10 @@ public class Estate {
     @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false)
     private String square;
+
+    @Column(nullable = false)
     private String price;
 
     @Column(nullable = false)
