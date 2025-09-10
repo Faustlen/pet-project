@@ -1,0 +1,29 @@
+package com.example.service;
+
+import com.example.dto.BuildingDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class KafkaConsumerService {
+
+    private final NotificationService service;
+
+    @KafkaListener(
+            topics = "${spring.kafka.template.default-topic}",
+            groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "kafkaListenerContainerFactory")
+    public void listenBatch(List<BuildingDto> batch) {
+            try {
+                service.send("SMS", LocalDateTime.now().toString());
+                service.send("EMAIL", LocalDateTime.now().toString());
+            } catch (Exception e) {
+                System.err.println("Не удалось отправить уведомление: " + e.getMessage());
+            }
+    }
+}
