@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/common-dto" />
             <option value="$PROJECT_DIR$/contentProcess" />
             <option value="$PROJECT_DIR$/contentProcessor" />
+            <option value="$PROJECT_DIR$/priceHistory" />
           </set>
         </option>
       </GradleProjectSettings>
