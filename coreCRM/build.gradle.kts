@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.5.5"
 	id("io.spring.dependency-management") version "1.1.7"
+    id("org.openapi.generator") version "7.10.0"
 }
 
 group = "com.example"
@@ -31,7 +32,8 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.6.3")
     implementation("net.javacrumbs.shedlock:shedlock-spring:6.10.0")
     implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.10.0")
-	compileOnly("org.projectlombok:lombok")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+    compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")

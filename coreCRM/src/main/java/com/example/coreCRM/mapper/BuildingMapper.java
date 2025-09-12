@@ -16,6 +16,7 @@ public interface BuildingMapper {
     BuildingEntity toEntity(CreateBuildingRequest dto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "lastContactDate", ignore = true)
     BuildingEntity toEntity(CreateBuildingRequest dto, @MappingTarget BuildingEntity building);
 
     BuildingResponse toResponse(BuildingEntity entity);
