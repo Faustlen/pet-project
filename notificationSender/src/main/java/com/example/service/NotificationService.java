@@ -22,7 +22,7 @@ public class NotificationService {
         if ("SMS".equalsIgnoreCase(type)) {
             sender.sendSms("phone", text);
         } else if ("EMAIL".equalsIgnoreCase(type)) {
-            sender.sendEmail("Harbinger8050@gmail.com", text);
+            sender.sendEmail("harbinger8050@gmail.com", text);
         } else {
             throw new IllegalArgumentException("");
         }

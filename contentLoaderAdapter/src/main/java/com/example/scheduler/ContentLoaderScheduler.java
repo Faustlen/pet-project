@@ -23,19 +23,19 @@ public class ContentLoaderScheduler {
     private int domclickIndex = 0;
     private static final int BATCH_SIZE = 10;
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 60000)
     public void sendCianBatch() throws IOException {
         processFile("contentLoaderAdapter/data/cian/offers.xlsx", "Cian", cianIndex);
         cianIndex += BATCH_SIZE;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 600000)
     public void sendRosreestrBatch() throws IOException {
         processFile("contentLoaderAdapter/data/rosreestr/offers.xlsx", "Rosreestr", rosreestrIndex);
         rosreestrIndex += BATCH_SIZE;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 600000)
     public void sendDomklikBatch() throws IOException {
         processFile("contentLoaderAdapter/data/domclick/offers.xlsx", "Domklik", domclickIndex);
         domclickIndex += BATCH_SIZE;
