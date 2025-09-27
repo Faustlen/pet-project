@@ -1,1 +1,1 @@
-rootProject.name = "contentProcessor"
+rootProject.name = "notificationSender"

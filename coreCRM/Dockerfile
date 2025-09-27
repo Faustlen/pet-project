@@ -1,0 +1,5 @@
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY /build/libs/CoreCRM-0.0.1-SNAPSHOT.jar /app/CoreCRM.jar
+EXPOSE 8080
+ENTRYPOINT ["sh", "-c", "java -DDB_HOST=${DB_HOST} -DDB_PORT=${DB_PORT} -DDB_NAME=${DB_NAME} -DDB_USERNAME=${DB_USERNAME} -DDB_PASSWORD=${DB_PASSWORD} -jar CoreCRM.jar"]
