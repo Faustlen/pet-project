@@ -9,7 +9,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 3
     consumer:
-      group-id: kafka-example-group
+      group-id: kafka-example-group-2
       auto-offset-reset: earliest
       keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
       valueDeserializer: org.springframework.kafka.support.serializer.JsonDeserializer

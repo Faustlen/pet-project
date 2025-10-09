@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-loader
+  labels:
+    app: content-loader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-loader
+  template:
+    metadata:
+      labels:
+        app: content-loader
+    spec:
+      initContainers:
+        - name: wait-for-kafka
+          image: busybox:1.36
+          command: [ 'sh', '-c', 'until nc -z kafka 9092; do echo "Waiting for Kafka..."; sleep 5; done;' ]
+      containers:
+        - name: content-loader
+          image: content_loader:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: KF_TOPIC
+              value: "topic1"
+            - name: DATA_DIR
+              value: "/app/data"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-loader
+spec:
+  type: ClusterIP
+  selector:
+    app: content-loader
+  ports:
+    - port: 8080
+      targetPort: 8080

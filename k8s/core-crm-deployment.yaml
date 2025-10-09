@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-crm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core-crm
+  template:
+    metadata:
+      labels:
+        app: core-crm
+    spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox:1.36
+          command: [ 'sh', '-c', 'until nc -z postgres 5432; do echo "Waiting for Postgres..."; sleep 5; done;' ]
+      containers:
+        - name: core-crm
+          image: core_crm:latest
+          imagePullPolicy: Never
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: crm_db
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: password
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: core-crm
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      nodePort: 30080
+  selector:
+    app: core-crm

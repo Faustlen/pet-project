@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-processor
+  template:
+    metadata:
+      labels:
+        app: content-processor
+    spec:
+      initContainers:
+        - name: wait-for-kafka
+          image: busybox:1.36
+          command: [ 'sh', '-c', 'until nc -z kafka 9092; do echo "Waiting for Kafka..."; sleep 5; done;' ]
+        - name: wait-for-postgres
+          image: busybox:1.36
+          command: [ 'sh', '-c', 'until nc -z postgres 5432; do echo "Waiting for Postgres..."; sleep 5; done;' ]
+      containers:
+        - name: content-processor
+          image: content_processor:latest
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: kafka-config
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: content_processor_db
+            - name: DB_USERNAME
+              value: admin
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: password

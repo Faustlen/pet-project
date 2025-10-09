@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-sender
+  labels:
+    app: notification-sender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-sender
+  template:
+    metadata:
+      labels:
+        app: notification-sender
+    spec:
+      initContainers:
+        - name: wait-for-kafka
+          image: busybox:1.36
+          command: [ 'sh', '-c', 'until nc -z kafka 9092; do echo "Waiting for Kafka..."; sleep 5; done;' ]
+      containers:
+        - name: notification-sender
+          image: notification_sender:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: KF_TOPIC
+              value: "topic1"
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secrets
+                  key: username
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secrets
+                  key: password
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-sender
+spec:
+  type: ClusterIP
+  selector:
+    app: notification-sender
+  ports:
+    - port: 8080
+      targetPort: 8080
