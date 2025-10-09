@@ -16,7 +16,7 @@
     
     cd ../notificationSender
     ./gradlew clean build -x test
-```
+    ```
 
 2. Создать Docker-образы при помощи скрипта /scripts/build-all-docker.sh или вручную:
     ``` bash
@@ -34,7 +34,7 @@
     
     cd ../notificationSender
     docker build -t notification-sender .
-```
+    ```
 
 3. Поднять инфраструктуру и сервисы:
     ``` bash
@@ -66,7 +66,7 @@
     
     cd ../notificationSender
     ./gradlew clean build -x test
-```
+    ```
 
 2. Создать Docker-образы при помощи скрипта /scripts/build-all-docker.sh или вручную:
     ``` bash
@@ -84,7 +84,7 @@
     
     cd ../notificationSender
     docker build -t notification-sender .
-```
+    ```
 
 3. Создать `ConfigMap` и `Secrets`:
     ``` bash
